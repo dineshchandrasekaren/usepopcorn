@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
-import SearchBox from "./components/SearchBox";
 import MovieNum from "./components/MovieNum";
-import Main from "./components/Main";
+import SearchBox from "./components/SearchBox";
 import MovieList from "./components/MovieList";
+import Main from "./components/Main";
 import WatchedMovieList from "./components/WatchedMovieList";
-
+import Box from "./components/Box";
+import WatchedSummary from "./components/WatchedSummary";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -54,20 +55,27 @@ const tempWatchedData = [
 ];
 
 export default function App() {
-  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState(tempMovieData);
+  const [query, setQuery] = useState("");
   const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
       <Navbar>
-        <SearchBox query={query} setQuery={setQuery} />
         <MovieNum length={movies.length} />
+        <SearchBox query={query} setQuery={setQuery} />
       </Navbar>
 
       <Main>
-        <MovieList movies={movies} />
-        <WatchedMovieList watched={watched} />
+        <Box element={<MovieList movies={movies} />} />
+        <Box
+          element={
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMovieList watched={watched} />
+            </>
+          }
+        />
       </Main>
     </>
   );

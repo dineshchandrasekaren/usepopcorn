@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ToggleButton from "./ToggleButton";
 
-const Box = ({ children }) => {
+const Box = ({ element }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -10,7 +10,7 @@ const Box = ({ children }) => {
         isOpen={isOpen}
         onClick={() => setIsOpen((open) => !open)}
       />
-      {isOpen && children}
+      {isOpen && element}
     </div>
   );
 };
