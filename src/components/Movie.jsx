@@ -1,4 +1,3 @@
-import React from "react";
 import LabelWithEmoji from "./LabelWithEmoji";
 
 const Movie = ({ movie }) => {

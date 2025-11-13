@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
-import ToggleButton from "./components/ToggleButton";
-import Box from "./components/Box";
+import SearchBox from "./components/SearchBox";
+import MovieNum from "./components/MovieNum";
+import Main from "./components/Main";
 import MovieList from "./components/MovieList";
-import Movie from "./components/Movie";
-import WatchedSummary from "./components/WatchedSummary";
+import WatchedMovieList from "./components/WatchedMovieList";
 
 const tempMovieData = [
   {
@@ -53,47 +53,22 @@ const tempWatchedData = [
   },
 ];
 
-const average = (arr) =>
-  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-
 export default function App() {
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
 
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watched.map((movie) => movie.userRating));
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
-
   return (
     <>
-      <Navbar movies={movies} />
+      <Navbar>
+        <SearchBox query={query} setQuery={setQuery} />
+        <MovieNum length={movies.length} />
+      </Navbar>
 
-      <main className="main">
-        <Box>
-          <MovieList>
-            {movies?.map((movie) => (
-              <Movie movie={movie} key={movie.Title} />
-            ))}
-          </MovieList>
-        </Box>
-
-        <Box>
-          <>
-            <WatchedSummary
-              length={watched.length}
-              avgUserRating={avgUserRating}
-              avgRuntime={avgRuntime}
-              avgImdbRating={avgImdbRating}
-            />
-
-            <MovieList>
-              {watched.map((movie) => (
-                <Movie movie={movie} key={movie.Title} />
-              ))}
-            </MovieList>
-          </>
-        </Box>
-      </main>
+      <Main>
+        <MovieList movies={movies} />
+        <WatchedMovieList watched={watched} />
+      </Main>
     </>
   );
 }
